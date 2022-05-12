@@ -39,19 +39,28 @@ const lightBoxModal = basicLightbox.create(`
 	{
 		onShow: (lightBoxModal) => {
 			document.addEventListener('keydown', closeGalleryImage);
+			document.addEventListener('click', closeGalleryImage);
+			// document.querySelector()
 		},
+		onClose: (lightBoxModal) => {
+			document.removeEventListener('keydown', closeGalleryImage);
+			document.removeEventListener('click', closeGalleryImage);
+		}
 	});
 lightBoxModal.show();
 
 
-function closeGalleryImage(e){
-	if (e.key === 'Escape' && document.querySelector('.basicLightbox.basicLightbox--visible')) {
-		lightBoxModal.close(() => {
-			document.removeEventListener('keydown', closeGalleryImage);
-		});
+	function closeGalleryImage(e){
+		if (e.key === 'Escape' && document.querySelector('.basicLightbox.basicLightbox--visible')) {
+			lightBoxModal.close();
+		}
+
+		else if (e.type === 'click' && document.querySelector('.basicLightbox.basicLightbox--visible')) {
+			lightBoxModal.close();
+		}
+
+
+
 	}
 }
-
-}
-
 galleryEl.addEventListener('click', imageGalleryClick);
